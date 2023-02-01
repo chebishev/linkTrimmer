@@ -12,12 +12,12 @@ function_dictionary = {
 original_youtube_link = input("Paste your YouTube Music link here: ")
 
 # This string replace function removes "music." from the YouTube link
-remove_music = function_dictionary["remove_music"](original_youtube_link)
+removed_music = function_dictionary["remove_music"](original_youtube_link)
 # it does the same thing as:
 # remove_music = original_youtube_link.replace("music.", "")
 
 # This function removes the final part of the link: "&feature=share"
-trimmed_link = function_dictionary["trim_link"](original_youtube_link)
+trimmed_link = function_dictionary["trim_link"](removed_music)
 # same functionality as:
 # trimmed_link = remove_music.replace("&feature=share", "")
 
