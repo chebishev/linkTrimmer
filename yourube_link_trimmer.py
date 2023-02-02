@@ -8,7 +8,7 @@ root.resizable(False, False)
 root.title('Link Trimmer for YouTube Music links')
 
 
-# trims ".music" from the link and returns it to the input field
+# trims "music." from the link and returns it to the input field
 def remove_music(text):
     text = text.replace("music.", "")
     entry.delete(0, END)
@@ -41,7 +41,7 @@ entry.focus_set()
 entry.pack()
 
 # Creates Buttons for Removing, Trimming and Auto trimming:
-ttk.Button(root, text="Remove '.music'", width=20, command=lambda: remove_music(entry.get())).pack(
+ttk.Button(root, text="Remove 'music.'", width=20, command=lambda: remove_music(entry.get())).pack(
     pady=20)
 ttk.Button(root, text="Trim from '&' to the end", width=25, command=lambda: trim_from_and_symbol(entry.get())).pack(
     pady=20)
