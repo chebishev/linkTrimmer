@@ -5,15 +5,17 @@ from tkinter.ttk import Entry
 root = tk.Tk()
 root.geometry('550x330')
 root.resizable(False, False)
-root.title('Link Trimmer')
+root.title('Link Trimmer for YouTube Music links')
 
 
+# trims ".music" from the link and returns it to the input field
 def remove_music(text):
     text = text.replace("music.", "")
     entry.delete(0, END)
     return entry.insert(0, text)
 
 
+# removes all characters from "&" to the end of the link and returns it to the input field
 def trim_from_and_symbol(text):
     if "&" in text:
         symbol_index = text.index("&")
@@ -21,6 +23,7 @@ def trim_from_and_symbol(text):
         return entry.insert(0, text[:symbol_index])
 
 
+# Executes the functions above with double click and return the modified link in the input field
 def trim_all(text):
     remove_music(text)
     trim_from_and_symbol(text)
@@ -37,17 +40,14 @@ entry = Entry(root, width=77)
 entry.focus_set()
 entry.pack()
 
-function_dictionary = {
-    "remove_music": lambda x: x.replace("music.", ""),
-    "trim_link": lambda x: x.replace("&feature=share", "")
-}
-# Create a Button to validate Entry Widget
+# Creates Buttons for Removing, Trimming and Auto trimming:
 ttk.Button(root, text="Remove '.music'", width=20, command=lambda: remove_music(entry.get())).pack(
     pady=20)
-ttk.Button(root, text="Remove '&.......'", width=20, command=lambda: trim_from_and_symbol(entry.get())).pack(
+ttk.Button(root, text="Trim from '&' to the end", width=25, command=lambda: trim_from_and_symbol(entry.get())).pack(
     pady=20)
 ttk.Button(root, text="Auto trim (press twice)", width=25, command=lambda: trim_all(entry.get())).pack(pady=20)
 
+# execution of the program
 root.mainloop()
 
 # test inputs:
