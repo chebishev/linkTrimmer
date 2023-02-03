@@ -1,3 +1,4 @@
+import pyshorteners
 import tkinter as tk
 from tkinter import ttk, END
 from tkinter.ttk import Entry
@@ -23,11 +24,17 @@ def trim_from_ampersand_symbol(text):
         return entry.insert(0, text[:index_of_ampersand])
 
 
-# Executes the functions above with double click and return the modified link in the input field
-def trim_all(text):
-    remove_music(text)
-    trim_from_ampersand_symbol(text)
-    return text
+# Executes the functions above and return the modified link in the input field
+def trim_all():
+    remove_music(entry.get())
+    trim_from_ampersand_symbol(entry.get())
+
+
+def shorten_url(url):
+    service = pyshorteners.Shortener(api_key='6e4f69ed88460cc3cb3c96b6c1857c64e26ef452')
+    short_url = service.bitly.short(url)
+    entry.delete(0, END)
+    return entry.insert(0, short_url)
 
 
 # Initialize a Label to display the User Input
@@ -41,12 +48,15 @@ entry.focus_set()
 entry.pack()
 
 # Creates Buttons for Removing, Trimming and Auto trimming:
-ttk.Button(root, text="Remove 'music.'", width=20,
-           command=lambda: remove_music(entry.get())).pack(pady=20)
-ttk.Button(root, text="Trim from '&' to the end", width=25,
-           command=lambda: trim_from_ampersand_symbol(entry.get())).pack(pady=20)
-ttk.Button(root, text="Auto trim (press twice)", width=25,
-           command=lambda: trim_all(entry.get())).pack(pady=20)
+tk.Button(root, text="Remove 'music.'", width=25, bd="3",
+          command=lambda: remove_music(entry.get())).place(x=90, y=160)
+tk.Button(root, text="Trim from '&' to the end", width=25, bd="3",
+          command=lambda: trim_from_ampersand_symbol(entry.get())).place(x=90, y=230)
+tk.Button(root, text="Quick trim", width=25, bg="forest green", fg="mint cream", bd="3",
+          command=lambda: trim_all()).place(x=300, y=160)
+button_text = "Get short link"
+tk.Button(root, text=button_text, width=25, bd="3", bg="SteelBlue3", fg="mint cream",
+          command=lambda: shorten_url(entry.get())).place(x=300, y=230)
 
 # execution of the program
 root.mainloop()
