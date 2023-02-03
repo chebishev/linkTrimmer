@@ -49,9 +49,9 @@ entry.pack()
 
 # Creates Buttons for Removing, Trimming and Auto trimming:
 tk.Button(root, text="Remove 'music.'", width=25, bd="3",
-          command=lambda: remove_music(entry.get())).place(x=90, y=160)
+          command=lambda: remove_music(entry.get())).place(x=70, y=160)
 tk.Button(root, text="Trim from '&' to the end", width=25, bd="3",
-          command=lambda: trim_from_ampersand_symbol(entry.get())).place(x=90, y=230)
+          command=lambda: trim_from_ampersand_symbol(entry.get())).place(x=70, y=230)
 tk.Button(root, text="Quick trim", width=25, bg="forest green", fg="mint cream", bd="3",
           command=lambda: trim_all()).place(x=300, y=160)
 button_text = "Get short link"
