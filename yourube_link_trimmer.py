@@ -31,9 +31,15 @@ def trim_all():
 
 
 def shorten_url(url):
-    service = pyshorteners.Shortener(api_key='6e4f69ed88460cc3cb3c96b6c1857c64e26ef452')
+    key = "Your API Key"
+    if key == "Your API Key":
+        entry.delete(0, END)
+        return entry.insert(0, "You have to add valid API key")
+
+    service = pyshorteners.Shortener(api_key=key)
     short_url = service.bitly.short(url)
     entry.delete(0, END)
+
     return entry.insert(0, short_url)
 
 
