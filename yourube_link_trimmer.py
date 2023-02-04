@@ -34,7 +34,7 @@ def shorten_url(url):
     key = "Your API Key"
     if key == "Your API Key":
         entry.delete(0, END)
-        return entry.insert(0, "You have to add valid API key")
+        return entry.insert(0, "You have to add valid bit.ly API key on row 34")
 
     service = pyshorteners.Shortener(api_key=key)
     short_url = service.bitly.short(url)
