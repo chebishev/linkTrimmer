@@ -1,7 +1,8 @@
-import pyshorteners
 import tkinter as tk
-from tkinter import ttk, END
+from tkinter import END
 from tkinter.ttk import Entry
+
+import pyshorteners
 
 root = tk.Tk()
 root.geometry('550x330')
