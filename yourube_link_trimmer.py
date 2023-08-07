@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import END
 from tkinter.ttk import Entry
 import os
-from dotenv import load_dotenv
-load_dotenv()
-
 import pyshorteners
+from dotenv import load_dotenv
+
+load_dotenv()
 
 root = tk.Tk()
 root.geometry('550x330')
@@ -35,10 +35,10 @@ def trim_all():
 
 
 def shorten_url(url):
-    key = os.getenv('BITLY_API')
-    # if key == "Your API Key":
-    #     entry.delete(0, END)
-    #     return entry.insert(0, "You have to add valid bit.ly API key on row 35")
+    key = os.getenv('BITLY_API', 'Your API Key')
+    if key == "Your API Key":
+        entry.delete(0, END)
+        return entry.insert(0, "You have to add valid bit.ly API key on row 38")
 
     service = pyshorteners.Shortener(api_key=key)
     short_url = service.bitly.short(url)
