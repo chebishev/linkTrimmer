@@ -1,15 +1,81 @@
-# linkTrimmer
-Trims the unnecessary information from YouTube links
+# 🎵 Link Trimmer for YouTube Music
 
-Intitially it was designed to trim "YouTube Music" links by removing "music." and all after the "&" sign (inclusive)
+A simple desktop app built with Python and Tkinter that trims and shortens YouTube Music links.  
+It helps you remove unnecessary parts (like `music.` or parameters after `&`) and get a short, shareable Bitly link — automatically copied to your clipboard!
 
-Now we have 4 buttons that can do the following thins:
-- Remove "music." from the link
-- Remove the ampersand symbol and anything after it (until the very end of the link)
-- Quick (auto) Trim - Doing the operations above with one click
-- Short url button associated with bit.ly. Needs API KEY, which I can't provide
+---
 
-The last 3 buttons can work with normal YouTube links if there is "&" or there is need for link to be shorten
-Enjoy!
+## ✨ Features
+
+- ✅ Remove `music.` from URLs
+- ✅ Trim everything after the first `&`
+- ✅ Quick trim (both of the above)
+- ✅ Shorten links with Bitly
+- ✅ Copy results to clipboard on every action
+- ✅ Lightweight and fast desktop tool
+
+---
+
+## 📸 Screenshot
 
 ![image](link-trimer.png)
+
+---
+
+## 🛠️ Installation
+
+1. **Clone the repo:**
+
+```bash
+git clone https://github.com/your-username/link-trimmer.git
+cd link-trimmer
+```
+
+2. **Install dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+
+3. **Create a .env file:**
+```ini
+BITLY_API=your_real_bitly_api_key_here
+```
+
+4. **Run the app:**
+
+```bash
+python main.py
+```
+
+## 🖥️ Build Executable (Optional)
+```bash
+pip install pyinstaller
+pyinstaller --onefile --noconsole main.py
+```
+
+## 📄 Example Input/Output
+Original YouTube Music link:
+```arduino
+https://music.youtube.com/watch?v=zqOWV_pq9Zs&feature=share
+```
+
+Trimmed link:
+```arduino
+https://music.youtube.com/watch?v=zqOWV_pq9Zs
+```
+
+Shortened link:
+```arduino
+https://bitly.link/zqOWV_pq9Zs
+```
+📋 Automatically copied to clipboard!
+
+
+## 📤 License
+MIT License
+
+## 🙋‍♂️ Author
+Created by chebishev
+
+
