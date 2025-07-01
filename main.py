@@ -129,8 +129,12 @@ class LinkTrimmerApp:
         :return: None
         """
         text = self.get_entry_text()
+        # Repeated code, because of the copy_to_clipboard method
+        # If you call the methods directly you'll receive messagebox more than once
+        # same as remove_music method
         if "music." in text:
             text = text.replace("music.", "")
+        # same as trim_from_ampersand_symbol method
         if "&" in text:
             text = text.split("&", 1)[0]
         self.set_entry_text(text)
