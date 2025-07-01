@@ -31,8 +31,7 @@ class LinkTrimmerApp:
         # Instructions
         tk.Label(
             self.root,
-            text="""Paste YouTube Music link and
-                    Pick one of the options below:""",
+            text="\nPaste YouTube Music link and\nPick one of the options below:\n",
             font="Courier 15 bold"
         ).pack()
 
@@ -51,8 +50,8 @@ class LinkTrimmerApp:
         tk.Button(self.root, text="Quick trim", width=25, bg="forest green", fg="mint cream", bd="3",
                   command=self.trim_all).place(x=300, y=160)
 
-        tk.Button(self.root, text="Shorten & Copy", width=25, bd="3", bg="SteelBlue3", fg="mint cream",
-                  command=self.shorten_and_copy).place(x=300, y=230)
+        tk.Button(self.root, text="Shorten link with bit.ly", width=25, bd="3", bg="SteelBlue3", fg="mint cream",
+                  command=self.shorten).place(x=300, y=230)
 
     def get_entry_text(self):
         """
@@ -66,19 +65,34 @@ class LinkTrimmerApp:
 
     def set_entry_text(self, text):
         """
-        Sets the text of the entry widget to the given text, after clearing its
-        current contents.
+        Sets the text of the entry widget to the given text and copies it to the
+        system clipboard.
 
-        :param text: The new text to set in the entry widget.
+        :param text: The text to set in the entry widget and copy to the
+            clipboard.
         :type text: str
         """
         self.entry.delete(0, END)
         self.entry.insert(0, text)
+        self.copy_to_clipboard(text)
+        messagebox.showinfo("Success", "URL copied to clipboard!")
+
+    def copy_to_clipboard(self, text):
+        """
+        Copies the given text to the system clipboard.
+
+        :param text: The text to copy to the clipboard.
+        :type text: str
+        """
+        self.root.clipboard_clear()
+        self.root.clipboard_append(text)
+        self.root.update()  # Keeps clipboard contents after window closes
 
     def remove_music(self):
         """
-        Removes the substring "music." from the text in the entry widget,
-        if it exists, and updates the entry with the modified text.
+        Removes the "music." substring from the text in the entry widget, if
+        present, and updates the entry widget with the modified text. If the
+        substring is not present, the original text is copied to the clipboard.
 
         :return: None
         """
@@ -86,11 +100,15 @@ class LinkTrimmerApp:
         if "music." in text:
             text = text.replace("music.", "")
             self.set_entry_text(text)
+        else:
+            self.copy_to_clipboard(text)
 
     def trim_from_ampersand_symbol(self):
         """
-        Trims the text in the entry widget by removing all characters from
-        the ampersand (&) to the end of the string, if the ampersand exists.
+        Trims the text in the entry widget from the ampersand symbol (&) to the
+        end of the text, if present, and updates the entry widget with the
+        modified text. If the ampersand symbol is not present, the original text
+        is copied to the clipboard.
 
         :return: None
         """
@@ -98,18 +116,26 @@ class LinkTrimmerApp:
         if "&" in text:
             text = text.split("&", 1)[0]
             self.set_entry_text(text)
+        else:
+            self.copy_to_clipboard(text)
 
     def trim_all(self):
         """
-        Performs both the removal of "music." and the trimming from the
-        ampersand (&) to the end of the string on the text in the entry widget.
+        Removes the "music." substring from the text in the entry widget, if
+        present, and trims the text from the ampersand symbol (&) to the end of
+        the text, if present. If neither the substring nor the ampersand symbol
+        is present, the original text is copied to the clipboard.
 
         :return: None
         """
-        self.remove_music()
-        self.trim_from_ampersand_symbol()
+        text = self.get_entry_text()
+        if "music." in text:
+            text = text.replace("music.", "")
+        if "&" in text:
+            text = text.split("&", 1)[0]
+        self.set_entry_text(text)
 
-    def shorten_and_copy(self):
+    def shorten(self):
         """
         Retrieves the text from the entry widget, shortens it using the bit.ly
         API, and sets the entry widget to the shortened URL. Also copies the
@@ -136,8 +162,6 @@ class LinkTrimmerApp:
             self.root.clipboard_clear()
             self.root.clipboard_append(short_url)
             self.root.update()  # Keeps clipboard after window closes
-
-            messagebox.showinfo("Success", "Short URL copied to clipboard!")
 
         except Exception as e:
             messagebox.showerror("Shortening Failed", str(e))
