@@ -4,6 +4,17 @@ from tkinter.ttk import Entry
 import os
 import pyshorteners
 from dotenv import load_dotenv
+from config import get_settings
+
+settings = get_settings()
+BITLY_API = settings.BITLY_API
+ROOT_GEOMETRY = settings.ROOT_GEOMETRY
+ROOT_RESIZABLE = settings.ROOT_RESIZABLE
+ROOT_TITLE = settings.ROOT_TITLE
+BUTTON_WIDTH = settings.BUTTON_WIDTH
+BUTTON_BD = settings.BUTTON_BD
+
+
 
 load_dotenv()
 
@@ -151,7 +162,7 @@ class LinkTrimmerApp:
         :return: None
         """
         url = self.get_entry_text()
-        key = os.getenv('BITLY_API')
+        key = BITLY_API
 
         if not key or key == "Your API Key":
             messagebox.showerror("API Key Missing", "Please set a valid BITLY_API key in your .env file.")
