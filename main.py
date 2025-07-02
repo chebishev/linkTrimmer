@@ -12,9 +12,11 @@ ROOT_GEOMETRY = settings.ROOT_GEOMETRY
 ROOT_RESIZABLE = settings.ROOT_RESIZABLE
 ROOT_TITLE = settings.ROOT_TITLE
 BUTTON_WIDTH = settings.BUTTON_WIDTH
-BUTTON_BD = settings.BUTTON_BD
-
-
+BUTTON_BORDER_WIDTH = settings.BUTTON_BORDER_WIDTH
+X_ROW_ONE = settings.X_ROW_ONE
+X_ROW_TWO = settings.X_ROW_TWO
+Y_COL_ONE = settings.Y_COL_ONE
+Y_COL_TWO = settings.Y_COL_TWO
 
 load_dotenv()
 
@@ -29,15 +31,15 @@ class LinkTrimmerApp:
         self.root = root
         self.setup_ui()
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         """
         Sets up the user interface of the application.
 
         :return: None
         """
-        self.root.geometry('550x330')
-        self.root.resizable(False, False)
-        self.root.title('Link Trimmer for YouTube/YouTube Music links')
+        self.root.geometry(ROOT_GEOMETRY)
+        self.root.resizable(*ROOT_RESIZABLE)
+        self.root.title(ROOT_TITLE)
 
         # Instructions
         tk.Label(
@@ -52,19 +54,19 @@ class LinkTrimmerApp:
         self.entry.pack()
 
         # Buttons
-        tk.Button(self.root, text="Remove 'music.'", width=25, bd="3",
-                  command=self.remove_music).place(x=70, y=160)
+        tk.Button(self.root, text="Remove 'music.'", width=BUTTON_WIDTH, bd=BUTTON_BORDER_WIDTH,
+                  command=self.remove_music).place(x=X_ROW_ONE, y=Y_COL_ONE)
 
-        tk.Button(self.root, text="Trim from '&' to the end", width=25, bd="3",
-                  command=self.trim_from_ampersand_symbol).place(x=70, y=230)
+        tk.Button(self.root, text="Trim from '&' to the end", width=BUTTON_WIDTH, bd=BUTTON_BORDER_WIDTH,
+                  command=self.trim_from_ampersand_symbol).place(x=X_ROW_ONE, y=Y_COL_TWO)
 
-        tk.Button(self.root, text="Quick trim", width=25, bg="forest green", fg="mint cream", bd="3",
-                  command=self.trim_all).place(x=300, y=160)
+        tk.Button(self.root, text="Quick trim", width=BUTTON_WIDTH, bg="forest green", fg="mint cream", bd=BUTTON_BORDER_WIDTH,
+                  command=self.trim_all).place(x=X_ROW_TWO, y=Y_COL_ONE)
 
-        tk.Button(self.root, text="Shorten link with bit.ly", width=25, bd="3", bg="SteelBlue3", fg="mint cream",
-                  command=self.shorten).place(x=300, y=230)
+        tk.Button(self.root, text="Shorten link with bit.ly", width=BUTTON_WIDTH, bd=BUTTON_BORDER_WIDTH, bg="SteelBlue3", fg="mint cream",
+                  command=self.shorten).place(x=X_ROW_TWO, y=Y_COL_TWO)
 
-    def get_entry_text(self):
+    def get_entry_text(self) -> str:
         """
         Retrieves and returns the text from the entry widget, with leading
         and trailing whitespace removed.
@@ -74,7 +76,7 @@ class LinkTrimmerApp:
         """
         return self.entry.get().strip()
 
-    def set_entry_text(self, text):
+    def set_entry_text(self, text) -> None:
         """
         Sets the text of the entry widget to the given text and copies it to the
         system clipboard.
@@ -88,7 +90,7 @@ class LinkTrimmerApp:
         self.copy_to_clipboard(text)
         messagebox.showinfo("Success", "URL copied to clipboard!")
 
-    def copy_to_clipboard(self, text):
+    def copy_to_clipboard(self, text) -> None:
         """
         Copies the given text to the system clipboard.
 
@@ -99,7 +101,7 @@ class LinkTrimmerApp:
         self.root.clipboard_append(text)
         self.root.update()  # Keeps clipboard contents after window closes
 
-    def remove_music(self):
+    def remove_music(self) -> None:
         """
         Removes the "music." substring from the text in the entry widget, if
         present, and updates the entry widget with the modified text. If the
@@ -114,7 +116,7 @@ class LinkTrimmerApp:
         else:
             self.copy_to_clipboard(text)
 
-    def trim_from_ampersand_symbol(self):
+    def trim_from_ampersand_symbol(self) -> None:
         """
         Trims the text in the entry widget from the ampersand symbol (&) to the
         end of the text, if present, and updates the entry widget with the
@@ -130,7 +132,7 @@ class LinkTrimmerApp:
         else:
             self.copy_to_clipboard(text)
 
-    def trim_all(self):
+    def trim_all(self) -> None:
         """
         Removes the "music." substring from the text in the entry widget, if
         present, and trims the text from the ampersand symbol (&) to the end of
@@ -150,7 +152,7 @@ class LinkTrimmerApp:
             text = text.split("&", 1)[0]
         self.set_entry_text(text)
 
-    def shorten(self):
+    def shorten(self) -> None:
         """
         Retrieves the text from the entry widget, shortens it using the bit.ly
         API, and sets the entry widget to the shortened URL. Also copies the
