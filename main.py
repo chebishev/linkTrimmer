@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import END, messagebox
 from tkinter.ttk import Entry
-import os
 import pyshorteners
 from dotenv import load_dotenv
 from config import get_settings
@@ -11,12 +10,16 @@ BITLY_API = settings.BITLY_API
 ROOT_GEOMETRY = settings.ROOT_GEOMETRY
 ROOT_RESIZABLE = settings.ROOT_RESIZABLE
 ROOT_TITLE = settings.ROOT_TITLE
+ROOT_ICON = settings.ROOT_ICON
 BUTTON_WIDTH = settings.BUTTON_WIDTH
 BUTTON_BORDER_WIDTH = settings.BUTTON_BORDER_WIDTH
 X_ROW_ONE = settings.X_ROW_ONE
 X_ROW_TWO = settings.X_ROW_TWO
 Y_COL_ONE = settings.Y_COL_ONE
 Y_COL_TWO = settings.Y_COL_TWO
+FOREGROUND_COLOR = settings.FOREGROUND_COLOR
+COLORED_BUTTON_ONE = settings.COLORED_BUTTON_ONE
+COLORED_BUTTON_TWO = settings.COLORED_BUTTON_TWO
 
 load_dotenv()
 
@@ -40,6 +43,7 @@ class LinkTrimmerApp:
         self.root.geometry(ROOT_GEOMETRY)
         self.root.resizable(*ROOT_RESIZABLE)
         self.root.title(ROOT_TITLE)
+        self.root.iconbitmap(ROOT_ICON)
 
         # Instructions
         tk.Label(
@@ -60,11 +64,11 @@ class LinkTrimmerApp:
         tk.Button(self.root, text="Trim from '&' to the end", width=BUTTON_WIDTH, bd=BUTTON_BORDER_WIDTH,
                   command=self.trim_from_ampersand_symbol).place(x=X_ROW_ONE, y=Y_COL_TWO)
 
-        tk.Button(self.root, text="Quick trim", width=BUTTON_WIDTH, bg="forest green", fg="mint cream", bd=BUTTON_BORDER_WIDTH,
+        tk.Button(self.root, text="Quick trim", width=BUTTON_WIDTH, bg=COLORED_BUTTON_ONE, fg=FOREGROUND_COLOR, bd=BUTTON_BORDER_WIDTH,
                   command=self.trim_all).place(x=X_ROW_TWO, y=Y_COL_ONE)
 
-        tk.Button(self.root, text="Shorten link with bit.ly", width=BUTTON_WIDTH, bd=BUTTON_BORDER_WIDTH, bg="SteelBlue3", fg="mint cream",
-                  command=self.shorten).place(x=X_ROW_TWO, y=Y_COL_TWO)
+        tk.Button(self.root, text="Shorten link with bit.ly", width=BUTTON_WIDTH, bd=BUTTON_BORDER_WIDTH, bg=COLORED_BUTTON_TWO, fg=FOREGROUND_COLOR,
+                  command=self.shorten_with_bitly).place(x=X_ROW_TWO, y=Y_COL_TWO)
 
     def get_entry_text(self) -> str:
         """
@@ -152,7 +156,7 @@ class LinkTrimmerApp:
             text = text.split("&", 1)[0]
         self.set_entry_text(text)
 
-    def shorten(self) -> None:
+    def shorten_with_bitly(self) -> None:
         """
         Retrieves the text from the entry widget, shortens it using the bit.ly
         API, and sets the entry widget to the shortened URL. Also copies the
