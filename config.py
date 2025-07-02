@@ -1,5 +1,12 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import sys
 import os
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and PyInstaller """
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 
 class Settings(BaseSettings):
@@ -9,12 +16,12 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    BITLY_API: str
+    BITLY_API: str = "Your API Key"
     # MAIN WINDOW SETTINGS
     ROOT_GEOMETRY: str = "550x330"
     ROOT_RESIZABLE: tuple = (False, False)
     ROOT_TITLE: str = 'Link Trimmer for YouTube/YouTube Music links'
-    ROOT_ICON: str = os.path.join('assets', 'icon.ico')
+    ROOT_ICON: str = resource_path("assets/icon.ico")
     # BUTTONS SIZES, BORDERS AND POSITIONS
     BUTTON_WIDTH: int = 25
     BUTTON_BORDER_WIDTH: str = "3"

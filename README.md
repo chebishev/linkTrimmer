@@ -78,4 +78,5 @@ MIT License
 ## 🙋‍♂️ Author
 Created by chebishev
 
+## 🙋 Favicon Credit
 <a href="https://www.flaticon.com/free-icons/trim" title="trim icons">Trim icons created by Christ Design - Flaticon</a>
